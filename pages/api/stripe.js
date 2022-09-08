@@ -3,7 +3,10 @@ import Stripe from 'stripe';
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export default async function handler(req, res) {
+  
   if (req.method === 'POST') {
+    console.log(req)
+    
     try {
       const params = {
         submit_type: 'pay',
@@ -34,7 +37,8 @@ export default async function handler(req, res) {
             quantity: item.quantity
           }
         }),
-        success_url: `${req.headers.origin}/?success=true`,
+        
+        success_url: `${req.headers.origin}/success`,
         cancel_url: `${req.headers.origin}/?canceled=true`,
       }
 
